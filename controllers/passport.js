@@ -36,16 +36,27 @@ module.exports = function(passport) {
 	passport.use(new FacebookStrategy(
 		config.passportOptions.facebook,
 		function(accessToken, refreshToken, profile, done) {
-			console.log('============\n', accessToken, refreshToken, profile, '\n============');
-			console.log('-----YES-----');
-			done(null, Object.assign({}, profile, {hz: '+1'}));
-			//done(null, {token: 'hahahhahahahahaha'});
-			/*User.findOne({ fbId: profile.id }, function(err, user) {
+			var nuser;
+			
+			User.findOne({ fbId: profile.id }, function(err, user) {
 				if (err) { return done(err); }
 
 				if (user) { return done(null, user); }
+				
+				nuser = new User({
+					nickname: 'fb' + profile.id,
+					name: profile.displayName, //TODO: make escape
+					avatar: profile.photos.length? profile.photos[0].value : '',
+					fbId: profile.id
+				});
 
-				user.save();
-			});*/
+				return nuser.save();
+			})
+			.then(function(user) {
+              	done(null, nuser);
+            })
+            .catch(function(err) {
+              	done(err);
+            });
 		}));
 };
