@@ -19,18 +19,7 @@ module.exports = function(passport) {
         satellizerAdapter(),
         passport.authenticate('facebook', { failureRedirect: '/ppc', session: false }),
         function(req, res) {
-
-            console.log(req.params, req.body, req.query, '====PARAMS+++++++++++');
-            console.log('fd===================', req.user);
-            res.json(req.user);
-            //res.json({mess: 'fb VERY ok'});
-            //res.json(req.user.toObject());
-            //res.send('fb ok');
-            /*if (req.authInfo.isNew) {
-                res.status(201);
-            }
             res.json(req.user.toObject());
-            res.redirect('/');*/
         });
 
     return router;
