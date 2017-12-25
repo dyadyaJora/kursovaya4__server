@@ -11,6 +11,7 @@ var config = require('./config');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var me = require('./routes/me');
 
 var passport = require('passport');
 var mongoose = require('mongoose');
@@ -18,7 +19,12 @@ var mongoose = require('mongoose');
 
 require('./controllers/dbinit');
 require('./models/user');
+require('./models/order');
 var User = mongoose.model('User');
+var Order = mongoose.model('Order');
+
+
+var order = require('./routes/order');
 /*
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,6 +52,8 @@ initPassport(passport);
 
 app.use('/', routes);
 app.use('/users', users(passport));
+app.use('/me', me(passport));
+app.use('/order', order(passport));
 app.use('/test', function(req, res) {
     console.log('TEST')
     res.json({ test:'success'});
