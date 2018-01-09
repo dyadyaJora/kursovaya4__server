@@ -9,6 +9,8 @@ var debug = require('debug')('myApp_server:server');
 var http = require('http');
 var https = require('https');
 var fs = require('fs');
+var appClient = app.client;
+var appDriver = app.driver;
 
 var httpsOptions = {
     key: fs.readFileSync("ca.key"), // путь к ключу
@@ -20,16 +22,16 @@ var httpsOptions = {
  */
 
 var port = normalizePort(process.env.PORT || '3001');
-//app.set('port', 443);
-app.set('port', port);
+appClient.set('port', 443);
+//app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(appClient);
 
-var serverHttps = https.createServer(httpsOptions, app).listen(443);
+var serverHttps = https.createServer(httpsOptions, appClient).listen(443);
 serverHttps.listen(443);
 serverHttps.on('error', onError);
 serverHttps.on('listening', function() {
@@ -43,6 +45,20 @@ serverHttps.on('listening', function() {
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+// =============================================
+var port2 = normalizePort(process.env.PORT2 || '3002');
+appDriver.set('port', port2);
+//app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server2 = http.createServer(appDriver);
+appDriver.io.attach(server2);
+server2.listen(port2);
+server2.on('error', onError);
+server2.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.

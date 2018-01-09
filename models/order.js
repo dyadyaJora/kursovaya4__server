@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate');
+var autoIncrement = require('mongoose-auto-increment');
 
 var orderSchema = new Schema({
     fromAddress: String,
@@ -28,5 +29,13 @@ var orderSchema = new Schema({
 });
 
 orderSchema.plugin(mongoosePaginate);
+
+autoIncrement.initialize(mongoose.connection);
+orderSchema.plugin(autoIncrement.plugin, {
+    model: 'Order',
+    field: 'ordId',
+    startAt: 100,
+    incrementBy: 1
+});
 
 mongoose.model('Order', orderSchema);

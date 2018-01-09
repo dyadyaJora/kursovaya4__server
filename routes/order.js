@@ -7,7 +7,7 @@ var googleMaps = require('@google/maps').createClient({
   key: config.googleMapKey
 });
 
-module.exports = function(passport) {
+module.exports = function(passport, driverSocket) {
 
 	router.use(passport.authenticate('bearer', { session: false }));
 
@@ -49,14 +49,16 @@ module.exports = function(passport) {
 			
 			newOrder.save()
 				.then(function(res) {
-					console.log(res, 'ORDER RESULT ______________________')
+					console.log(res, 'ORDER RESULT ______________________');
+					res.send(newOrder.toObject());
+					driverSocket.socket.emit('driver-order', newOrder);
 				})
 				.catch(function(err) {
-					console.log(err, 'ORDER Error ______________________')
+					console.log(err, 'ORDER Error ______________________');
+					res.json({msg: 'Order DB error'});
 				});
 		}
 		// ======================
-		res.json({ok:true});
 	});
 
 	router.get('/allmy', function(req, res) {
