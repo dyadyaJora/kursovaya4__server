@@ -3,5 +3,5 @@ node_js:
   - "7"
 services:
   - mongodb
-script
+script:
   - npm run test
