@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/dyadyaJora/kursovaya4__server.svg?branch=master)](https://travis-ci.com/dyadyaJora/kursovaya4__server)
+
 # kursovaya4__server
 NodeJS serverside for kursovaya4
 
