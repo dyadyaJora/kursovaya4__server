@@ -41,3 +41,5 @@ NodeJS serverside for kursovaya4
 Запуск в prod
 
     npm start
+    
+
