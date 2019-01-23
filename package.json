@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "test": "echo \"Error: no test specified\"",
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www"
   },
