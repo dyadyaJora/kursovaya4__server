@@ -7,8 +7,8 @@ services:
   - rabbitmq
 before_install:
   - echo "install"
-  - export PATH=`echo $PATH | sed -e 's/:\.\/node_modules\/\.bin//g'`
-  - find . -name ".env.sample" -execdir cp {} .env \; 
+  - chmod +x ./shells/env-config.sh
+  - ./shells/env-config.sh
 install:
   - npm install
 before_script:
