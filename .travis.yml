@@ -1,8 +1,15 @@
+dist: trusty
 language: node_js
 node_js:
   - "10"
 services:
   - mongodb
   - rabbitmq
+before_install:
+  - echo "install"
+install:
+  - npm install
+before_script:
+  - "echo script"
 script:
   - npm run test
