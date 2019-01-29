@@ -7,9 +7,11 @@ services:
   - rabbitmq
 before_install:
   - echo "install"
+  - find . -name ".env.sample" -execdir cp {} .env \; 
 install:
   - npm install
 before_script:
   - "echo script"
 script:
   - npm run test
+  - echo done
