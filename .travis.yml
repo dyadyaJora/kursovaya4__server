@@ -1,18 +1,11 @@
 dist: trusty
-language: node_js
-node_js:
-  - "10"
-services:
-  - mongodb
-  - rabbitmq
-before_install:
-  - echo "install"
-  - chmod +x ./shells/env-config.sh
-  - ./shells/env-config.sh
-install:
-  - npm install
-before_script:
-  - "echo script"
-script:
-  - npm run test
-  - echo done
+matrix:
+  include:
+    - language: node_js
+      node_js: 10
+      before_script:
+        - "echo before script"
+      install:
+        - npm install
+      script:
+        - npm run test
